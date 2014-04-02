@@ -1,7 +1,9 @@
 shiny-adventure
 ===============
 
-madlib app
-@jackovitchblake with @ajbdev 
+#This is a programming exercise in ruby,
 
-This is a programming exercise in ruby
+find us on twitter at:
+
+@jackovitchblake
+@ajbdev
