@@ -1,2 +1,2 @@
-Hello Austin 
-5 + 5 
+puts "Hello Austin" 
+puts 5 + 5 
