@@ -1,2 +1,3 @@
-Hello Austin 
-5 + 5 
+Hello Austin
+below is some ruby code below pertaining to our project
+puts 5 + 5  
