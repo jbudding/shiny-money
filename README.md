@@ -6,5 +6,5 @@ find us at:
 
 Name  | twitter | github
 ------|---------|-------
-Blake Jackovitch | @jackovitchblake | @blakeblake
-Austin Buddington | @ajbdev | @abuddington
+Blake | @jackovitchblake | @blakeblake
+Austin | @ajbdev | @abuddington
