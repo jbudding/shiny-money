@@ -1,9 +1,10 @@
-#shiny-adventure
+#shiny-money
 
 ####This is a programming exercise in ruby,
 
-find us on twitter at:
+find us at:
 
-blake | austin
-------|-------
-@jackovitchblake | @ajbdev
+Name  | twitter | github
+------|---------|-------
+Blake Jackovitch | @jackovitchblake | @blakeblake
+Austin Buddington | @ajbdev | @abuddington
