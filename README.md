@@ -10,7 +10,3 @@ Name  | twitter | github
 ------|---------|-------
 Blake | @jackovitchblake | @blakeblake
 Austin | @ajbdev | @abuddington
-
-- [ ] @blakeblake checkout these *cool* checkboxes
-- [ ] add some todos for us
-- [ ] get money
