@@ -67,7 +67,7 @@ class BankAccount
 
 	def report
 
-		puts #{@attr.each}
+		puts@attr
 
 	end
 
