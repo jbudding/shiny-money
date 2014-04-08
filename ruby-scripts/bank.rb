@@ -27,41 +27,47 @@ class BankAccount
 		amount = gets.chomp
 
 		@attr["balance"] += amount.to_f
-		
+
 		@attr["transactions"] << track("withdrawl")
 
 	end
 
 	def withdraw
-	
+
 		puts "How much would you like to withdraw?"
-		
+
 		amount = gets.chomp
 
 		@attr["balance"]-= amount.to_f
-		
+
 		@attr["transactions"] << track("withdrawl")
 
 	end
 
 	def track(type)
-		
+
 		return  {
-		
+
 			"type" => type,
 
 			"time" => DateTime.now(),
-			
+
 			"result" => balance()
 		}
 
-	end	
+	end
 
 	def balance
 
 		puts "Your current balance is $#{@attr['balance']}"
-		
+
 		return @attr["balance"]
+
+	end
+
+	def report
+
+		puts #{@attr.each}
 
 	end
 
