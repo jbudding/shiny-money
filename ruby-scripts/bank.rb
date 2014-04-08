@@ -21,7 +21,7 @@ class BankAccount
 		puts "How much would you like to deposit?"
 
 		amount = gets.chomp
-
+		# this is a test push to see if i am 'gitting' this software correctly no changes have been made other then this comment
 		# access attribures as an object
 		# i think you can also do @attr.balance
 		@attr["balance"] += amount.to_f
