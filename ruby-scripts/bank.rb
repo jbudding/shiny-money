@@ -1,3 +1,4 @@
+
 require 'date'
 
 class BankAccount
@@ -49,16 +50,16 @@ class BankAccount
 		
 			"type" => type,
 
-			"time" => DateTime.now()
+			"time" => DateTime.now(),
 			
-			"result" => balance
+			"result" => balance()
 		}
 
 	end	
 
 	def balance
 
-		puts "Your current balance is $#{@attr["balance"]}"
+		puts "Your current balance is $#{@attr['balance']}"
 		
 		return @attr["balance"]
 
