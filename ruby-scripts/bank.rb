@@ -5,7 +5,7 @@ class BankAccount
 
 	def initialize(first_name, last_name)
 
-		# make a object (in ruby it's called a Hash) of all of the info we need,
+		# make a object of all of the info we need,
 		# this way it's all in a nice group instead of tons of individual variables
 
 		@attr = Hash.new()
@@ -46,7 +46,7 @@ class BankAccount
 
 	def track(type)
 		
-		transaction = {
+		return  {
 		
 			"type" => type,
 
