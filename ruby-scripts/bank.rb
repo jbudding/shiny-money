@@ -5,31 +5,48 @@ class BankAccount
 
     def initialize(first_name, last_name)
 
+        @first_name = first_name
+        @last_name  = last_name
+        @balance    = 0
+
         # make a object of all of the info we need,
         # this way it's all in a nice group instead of tons of individual variables
 
-        @attr = Hash.new()
+        # @attr = Hash.new()
 
-        @attr["first_name"] = first_name
+        # @attr["first_name"] = first_name
 
-        @attr["last_name"] = last_name
+        # @attr["last_name"] = last_name
 
-        @attr["transactions"] = []
+        # @attr["transactions"] = []
 
-        @attr["balance"] = 0
+        # @attr["balance"] = 0
 
     end
 
-    def deposit
+    def balance
+        puts "Your current balance is $#{@balance}"
+        @balance
+        "dougs"
+    end
+
+
+
+
+    def deposit amount = nil
 
         puts "How much would you like to deposit?"
 
-        amount = gets.chomp
+        amount = gets.chomp unless amount
 
-        # this is a test push to see if i am 'gitting' this software correctly no changes have been made other then this comment
-        @attr["balance"] += amount.to_f
+        @balance += amount.to_i
 
-        @attr["transactions"] << track("deposit")
+        puts "Thanks for the #{amount} dollars ass hole!  Now I have #{@balance} mo fo dollars!"
+
+        # # this is a test push to see if i am 'gitting' this software correctly no changes have been made other then this comment
+        # @attr["balance"] += amount.to_f
+
+        # @attr["transactions"] << track("deposit")
 
     end
 
@@ -58,13 +75,13 @@ class BankAccount
 
     end
 
-    def balance
+    # def balance
 
-        puts "Your current balance is $#{@attr['balance']}"
+        # puts "Your current balance is $#{@attr['balance']}"
 
-        return @attr["balance"]
+    #     return @attr["balance"]
 
-    end
+    # end
 
     def report
 
