@@ -24,12 +24,12 @@ class BankAccount
 
         puts "How much would you like to deposit?"
 
-        amount = gets.chomp
+        amount = gets.chomp.to_f
 
         # this is a test push to see if i am 'gitting' this software correctly no changes have been made other then this comment
-        @attr["balance"] += amount.to_f
+        @attr["balance"] += amount
 
-        @attr["transactions"] << track("deposit")
+        @attr["transactions"] << track("deposit", amount)
 
     end
 
@@ -37,21 +37,23 @@ class BankAccount
 
         puts "How much would you like to withdraw?"
 
-        amount = gets.chomp
+        amount = gets.chomp.to_f
 
-        @attr["balance"]-= amount.to_f
+        @attr["balance"] -= amount
 
-        @attr["transactions"] << track("withdrawl")
+        @attr["transactions"] << track("withdrawl", amount)
 
     end
 
-    def track(type)
+    def track(type, amt)
 
         return  {
 
             "type" => type,
 
-            "time" => DateTime.now().strftime("%d/%m/%y at %h:%M:%S"),
+            "amount" => amt,
+
+            "time" => DateTime.now().strftime("%d/%m/%y at %H:%M:%S"),
 
             "result" => balance()
         }
@@ -74,11 +76,11 @@ class BankAccount
 
             puts "\n"
             puts "\t\tTransaction #{i}"
-            puts "\t\t================="
+            puts "\t\t===================="
             a.each { |k,v|
                 puts <<-TEMP
                 |#{k} : #{v}
-                |----------------------
+                |--------------------
                 TEMP
             }
 
@@ -92,20 +94,9 @@ end
 
 puts <<-MESSAGE
 
-Welcome to Choco-Bank
-----------------------------------------
-
-    try making a few withdrawls and deposits,
-
-    example = BankAccount.new("First","Last")
-
-example.deposit
-
-example.withdraw
-
-example.report
-
-----------------------------------------
+Welcome to Choco-mato Bank v 0.0.0.1
+------------------------------------
     \n
-\n
+
+
 MESSAGE
