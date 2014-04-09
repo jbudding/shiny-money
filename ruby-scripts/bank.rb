@@ -1,4 +1,4 @@
-
+#test commit again 
 require 'date'
 
 class BankAccount
@@ -68,7 +68,6 @@ class BankAccount
 
 	def report
 
-		puts@attr
 
 	end
 
