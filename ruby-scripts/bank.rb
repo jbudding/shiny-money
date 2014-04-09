@@ -3,72 +3,108 @@ require 'date'
 
 class BankAccount
 
-	def initialize(first_name, last_name)
+    def initialize(first_name, last_name)
 
-		# make a object of all of the info we need,
-		# this way it's all in a nice group instead of tons of individual variables
+        # make a object of all of the info we need,
+        # this way it's all in a nice group instead of tons of individual variables
 
-		@attr = Hash.new()
+        @attr = Hash.new()
 
-		@attr["first_name"] = first_name
+        @attr["first_name"] = first_name
 
-		@attr["last_name"] = last_name
+        @attr["last_name"] = last_name
 
-		@attr["transactions"] = []
+        @attr["transactions"] = []
 
-		@attr["balance"] = 0
+        @attr["balance"] = 0
 
-	end
+    end
 
-	def deposit
+    def deposit
 
-		puts "How much would you like to deposit?"
+        puts "How much would you like to deposit?"
 
-		amount = gets.chomp
+        amount = gets.chomp
 
-		@attr["balance"] += amount.to_f
+        @attr["balance"] += amount.to_f
 
-		@attr["transactions"] << track("withdrawl")
+        @attr["transactions"] << track("deposit")
 
-	end
+    end
 
-	def withdraw
+    def withdraw
 
-		puts "How much would you like to withdraw?"
+        puts "How much would you like to withdraw?"
 
-		amount = gets.chomp
+        amount = gets.chomp
 
-		@attr["balance"]-= amount.to_f
+        @attr["balance"]-= amount.to_f
 
-		@attr["transactions"] << track("withdrawl")
+        @attr["transactions"] << track("withdrawl")
 
-	end
+    end
 
-	def track(type)
+    def track(type)
 
-		return  {
+        return  {
 
-			"type" => type,
+            "type" => type,
 
-			"time" => DateTime.now(),
+            "time" => DateTime.now().strftime("%d/%m/%y at %h:%M:%S"),
 
-			"result" => balance()
-		}
+            "result" => balance()
+        }
 
-	end
+    end
 
-	def balance
+    def balance
 
-		puts "Your current balance is $#{@attr['balance']}"
+        puts "Your current balance is $#{@attr['balance']}"
 
-		return @attr["balance"]
+        return @attr["balance"]
 
-	end
+    end
 
-	def report
+    def report
 
-		puts@attr
+        i = 0
 
-	end
+        @attr["transactions"].each { |a|
+
+            puts "\n"
+            puts "\t\tTransaction #{i}"
+            puts "\t\t================="
+            a.each { |k,v|
+                puts <<-TEMP
+                |#{k} : #{v}
+                |----------------------
+                TEMP
+            }
+
+            i += 1
+
+        }
+
+    end
 
 end
+
+puts <<-MESSAGE
+
+Welcome to Choco-Bank
+----------------------------------------
+
+    try making a few withdrawls and deposits,
+
+    example = BankAccount.new("First","Last")
+
+example.deposit
+
+example.withdraw
+
+example.report
+
+----------------------------------------
+    \n
+\n
+MESSAGE
