@@ -1,47 +1,54 @@
-#test commit again
+#!/usr/bin/ruby -w
+
 require 'date'
+require 'sqlite3'
 
 class BankAccount
 
     def initialize(first_name, last_name)
 
-        # make a object of all of the info we need,
-        # this way it's all in a nice group instead of tons of individual variables
+        @first_name = first_name
 
-        @attr = Hash.new()
+        @last_name = last_name
 
-        @attr["first_name"] = first_name
+        @transactions = []
 
-        @attr["last_name"] = last_name
+        @balance = 0
 
-        @attr["transactions"] = []
-
-        @attr["balance"] = 0
+        @db = SQLite3::Database.new("main.db")
 
     end
 
-    def deposit
+    def setup_my_db
 
-        puts "How much would you like to deposit?"
+        @db.execute <<-SQL
 
-        amount = gets.chomp.to_f
+            create table if not exists accounts(
+                
+                firstname varchar(30) UNIQUE,
 
-        # this is a test push to see if i am 'gitting' this software correctly no changes have been made other then this comment
-        @attr["balance"] += amount
+                lastname varchar(30),
 
-        @attr["transactions"] << track("deposit", amount)
+                balance int
+
+            );
+        SQL
 
     end
 
-    def withdraw
+    def deposit(amount)
 
-        puts "How much would you like to withdraw?"
+        @transactions << track("deposit", amount)
 
-        amount = gets.chomp.to_f
+        return @balance += amount
 
-        @attr["balance"] -= amount
+    end
 
-        @attr["transactions"] << track("withdrawl", amount)
+    def withdraw(amount)
+
+        @transactions << track("withdrawl", amount)
+
+        return @balance -= amount
 
     end
 
@@ -62,41 +69,31 @@ class BankAccount
 
     def balance
 
-        puts "Your current balance is $#{@attr['balance']}"
+        puts "Your current balance is $#{@balance}"
 
-        return @attr["balance"]
+        return @balance
 
     end
 
     def report
 
-        i = 0
+        r = @db.execute "select * from accounts"
 
-        @attr["transactions"].each { |a|
+        r.each do |a|
 
-            puts "\n"
-            puts "\t\tTransaction #{i}"
-            puts "\t\t===================="
-            a.each { |k,v|
-                puts <<-TEMP
-                |#{k} : #{v}
-                |--------------------
-                TEMP
-            }
+            puts a.to_s
 
-            i += 1
+        end
 
-        }
+    end
+
+    def launch
+
+        @db.execute("INSERT INTO accounts VALUES(?, ?, ?)", ["#{@first_name}","#{@last_name}", @balance])
 
     end
 
 end
 
-puts <<-MESSAGE
-
-Welcome to Choco-mato Bank v 0.0.0.1
-------------------------------------
-    \n
 
 
-MESSAGE
