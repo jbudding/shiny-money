@@ -1,57 +1,64 @@
-#test commit again
+#!/usr/bin/ruby -w
+
 require 'date'
+require 'sqlite3'
 
 class BankAccount
 
     def initialize(first_name, last_name)
 
-        # make a object of all of the info we need,
-        # this way it's all in a nice group instead of tons of individual variables
+        @first_name, @last_name  = first_name, last_name
 
-        @attr = Hash.new()
+        @transactions = []
 
-        @attr["first_name"] = first_name
+        @balance = 0
 
-        @attr["last_name"] = last_name
-
-        @attr["transactions"] = []
-
-        @attr["balance"] = 0
+        @db = SQLite3::Database.new("main.db")
 
     end
 
-    def deposit
+    def setup_my_db
 
-        puts "How much would you like to deposit?"
+        @db.execute <<-SQL
 
-        amount = gets.chomp
+            create table if not exists accounts(
+                
+                firstname varchar(30) UNIQUE,
 
-        # this is a test push to see if i am 'gitting' this software correctly no changes have been made other then this comment
-        @attr["balance"] += amount.to_f
+                lastname varchar(30),
 
-        @attr["transactions"] << track("deposit")
+                balance int
 
-    end
-
-    def withdraw
-
-        puts "How much would you like to withdraw?"
-
-        amount = gets.chomp
-
-        @attr["balance"]-= amount.to_f
-
-        @attr["transactions"] << track("withdrawl")
+            );
+        SQL
 
     end
 
-    def track(type)
+    def deposit(amount)
+
+        @transactions << track("deposit", amount)
+
+        return @balance += amount
+
+    end
+
+    def withdraw(amount)
+
+        @transactions << track("withdrawl", amount)
+
+        return @balance -= amount
+
+    end
+
+    def track(type, amt)
 
         return  {
 
             "type" => type,
 
-            "time" => DateTime.now().strftime("%d/%m/%y at %h:%M:%S"),
+            "amount" => amt,
+
+            "time" => DateTime.now().strftime("%d/%m/%y at %H:%M:%S"),
 
             "result" => balance()
         }
@@ -60,52 +67,31 @@ class BankAccount
 
     def balance
 
-        puts "Your current balance is $#{@attr['balance']}"
+        puts "Your current balance is $#{@balance}"
 
-        return @attr["balance"]
+        return @balance
 
     end
 
     def report
 
-        i = 0
+        r = @db.execute "select * from accounts"
 
-        @attr["transactions"].each { |a|
+        r.each do |a|
 
-            puts "\n"
-            puts "\t\tTransaction #{i}"
-            puts "\t\t================="
-            a.each { |k,v|
-                puts <<-TEMP
-                |#{k} : #{v}
-                |----------------------
-                TEMP
-            }
+            puts a.to_s
 
-            i += 1
+        end
 
-        }
+    end
+
+    def launch
+
+        @db.execute("INSERT INTO accounts VALUES(?, ?, ?)", ["#{@first_name}","#{@last_name}", @balance])
 
     end
 
 end
 
-puts <<-MESSAGE
 
-Welcome to Choco-Bank
-----------------------------------------
 
-    try making a few withdrawls and deposits,
-
-    example = BankAccount.new("First","Last")
-
-example.deposit
-
-example.withdraw
-
-example.report
-
-----------------------------------------
-    \n
-\n
-MESSAGE
